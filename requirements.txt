@@ -1,0 +1,6 @@
+Package         Version
+--------------- -------
+python          3.7.1
+matplotlib      3.2.0  
+numpy           1.18.1 
+pandas          1.0.1  
