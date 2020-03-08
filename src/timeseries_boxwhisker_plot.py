@@ -44,7 +44,7 @@ class TimeSeriesBoxWhiskerPlot:
         Args:
             fig(object): figure to save
         """
-        plt.savefig('../examples/timeseries_boxwhisker_plot.png', bbox_inches='tight')
+        plt.savefig('../examples/timeseries_boxwhisker_plot_COVID19.png', bbox_inches='tight')
         plt.close()
 
 
@@ -147,5 +147,5 @@ class TimeSeriesBoxWhiskerPlot:
 
 
 if __name__=='__main__':
-    df = pd.read_csv('../examples/coronavirusdataset/trend.csv', header=0, index_col=0)
+    df = pd.read_csv('../examples/trend_COVID19.csv', header=0, index_col=0)
     TimeSeriesBoxWhiskerPlot().run(df=df)
