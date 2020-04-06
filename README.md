@@ -1,4 +1,4 @@
-# PoolPlot
+# Plotting Pool
 This repo holds plotting scripts.
 
 # Motivation
