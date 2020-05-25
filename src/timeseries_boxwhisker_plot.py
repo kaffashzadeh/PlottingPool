@@ -11,8 +11,8 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
-font = {'family': 'serif', 'weight': 'normal', 'size': 10}
-matplotlib.rc('font',**font)
+font = {'family': 'serif', 'weight': 'normal', 'size': 12}
+matplotlib.rc('font', **font)
 
 
 class TimeSeriesBoxWhiskerPlot:
@@ -26,9 +26,9 @@ class TimeSeriesBoxWhiskerPlot:
         # input data
         self.__df = None
         # face colours
-        self.__fcs = ['w', 'w', 'w', 'w']
+        self.__fcs = ['w', 'w', 'w', 'w','w']
         # edge colours
-        self.__ecs = ['royalblue', 'lime', 'tomato', 'magenta']
+        self.__ecs = ['royalblue', 'lime', 'tomato', 'magenta', 'red']
 
     def __repr__(self):
         """
@@ -43,7 +43,7 @@ class TimeSeriesBoxWhiskerPlot:
         Args:
             fig(object): figure to save
         """
-        plt.savefig('../examples/timeseries_boxwhisker_plot_COVID19.png', bbox_inches='tight')
+        plt.savefig('../examples/timeseries_boxwhisker_temp_ozone_cve.png', bbox_inches='tight')
         plt.close()
 
     def make_subplot(self, nrows=1, ncols=2):
@@ -57,7 +57,7 @@ class TimeSeriesBoxWhiskerPlot:
         Return:
                fig and axes objects
         """
-        fig, axes = plt.subplots(nrows, ncols, figsize=(16., 8.), facecolor='white')
+        fig, axes = plt.subplots(nrows, ncols, figsize=(15., 8.), facecolor='white')
         return fig, axes
 
     def plot_box_whisker(self, ax=None):
@@ -109,41 +109,39 @@ class TimeSeriesBoxWhiskerPlot:
         dnames = list(self.__df.columns)
         ax.set_xticklabels(dnames)
 
-    def run(self, df=None):
+    def run(self, df1=None, df2=None):
         """
         It run the BoxPlot.
 
         Args:
-            df(pd.DataFrame): input data
+            df1(pd.DataFrame): first input data
+            df2(pd.DataFrame): second input data
         """
         # make a figure and subplots
-        fig, axes = self.make_subplot(nrows=2, ncols=2)
-        self.__df = df[['cold', 'flu', 'pneumonia', 'coronavirus']]
-        ax = axes[0,0]
-        self.__df.plot(ax=ax, color=self.__ecs)
-        #ax.set_title('from 6 December 2019 to 6 March 2020', fontweight='bold')
-        ax.set_ylabel('search volume (% per day)')
-        ax = axes[1,0]
+        fig, axes = self.make_subplot(nrows=1, ncols=2)
+        ax = axes[0]
+        self.__df = df1
+        ax.set_title('ground-level ozone', fontweight='bold')
         self.plot_box_whisker(ax=ax)
         self.add_scatter(ax=ax)
         self.customize_xticks(ax=ax)
-        ax.set_ylabel('search volume (% per day)')
-
-        self.__df = df[['cold', 'flu', 'pneumonia']]
-        ax = axes[0,1]
-        self.__df.plot(ax=ax, color=self.__ecs)
-        #ax.set_title('from 6 December 2019 to 6 March 2020', fontweight='bold')
-        ax.set_ylabel('search volume (% per day)')
-        ax = axes[1,1]
+        ax.set_ylim(-50, 2100)
+        ax.set_ylabel('number of the CVEs occurance')
+        ax.set_xlabel('CVEs lenght (t)')
+        ax = axes[1]
+        self.__df = df2
+        ax.set_title('atmospheric temperature', fontweight='bold')
         self.plot_box_whisker(ax=ax)
         self.add_scatter(ax=ax)
         self.customize_xticks(ax=ax)
-        ax.set_ylabel('search volume (% per day)')
-        plt.suptitle('Trend data of the keywords searched in NAVER which is one of the largest portal in South Korea',
-                     fontweight='bold', fontsize=14)
+        ax.set_ylabel('number of the CVEs occurance')
+        ax.set_xlabel('CVEs lenght (t)')
+        ax.set_ylim(-50, 2100)
+        plt.suptitle('an experiment using 166896 measured data points', fontweight='bold', fontsize=16)
         self.save_fig(fig=fig)
 
 
 if __name__ == '__main__':
-    df = pd.read_csv('../examples/trend_COVID19.csv', header=0, index_col=0)
-    TimeSeriesBoxWhiskerPlot().run(df=df)
+    df1 = pd.read_csv('../examples/cve_occurance_ozone.csv', header=0, sep='\t')
+    df2 = pd.read_csv('../examples/cve_occurance_temp.csv', header=0, sep='\t')
+    TimeSeriesBoxWhiskerPlot().run(df1=df1, df2=df2)
