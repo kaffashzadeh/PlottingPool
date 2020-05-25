@@ -11,12 +11,11 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
-font = {'family':'serif','weight':'normal','size':10}
+font = {'family': 'serif', 'weight': 'normal', 'size': 10}
 matplotlib.rc('font',**font)
 
 
 class TimeSeriesBoxWhiskerPlot:
-
 
     name = 'time series and box whisker plots'
 
@@ -25,7 +24,7 @@ class TimeSeriesBoxWhiskerPlot:
         This is to initialized the BoxPlot class.
         """
         # input data
-        self.__df=None
+        self.__df = None
         # face colours
         self.__fcs = ['w', 'w', 'w', 'w']
         # edge colours
@@ -46,7 +45,6 @@ class TimeSeriesBoxWhiskerPlot:
         """
         plt.savefig('../examples/timeseries_boxwhisker_plot_COVID19.png', bbox_inches='tight')
         plt.close()
-
 
     def make_subplot(self, nrows=1, ncols=2):
         """
@@ -146,6 +144,6 @@ class TimeSeriesBoxWhiskerPlot:
         self.save_fig(fig=fig)
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     df = pd.read_csv('../examples/trend_COVID19.csv', header=0, index_col=0)
     TimeSeriesBoxWhiskerPlot().run(df=df)
